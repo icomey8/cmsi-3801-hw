@@ -22,9 +22,7 @@ export function firstThenLowerCase(strings, predicate) {
       return string.toLowerCase()
     }
   }
-  
   return undefined
-
 }
 
 // Write your powers generator here
@@ -32,5 +30,27 @@ export function firstThenLowerCase(strings, predicate) {
 // Write your say function here
 
 // Write your line count function here
+export async function meaningfulLineCount(file) {
+  let fileHandle;
+  try {
+    const fileHandle = await open(file, "r")
+    const content = await fileHandle.readFile({ encoding: 'utf-8' })
+    const lines = content.split('\n')
+    let count = 0
+    for (const line of lines) {
+      const trimmedLine = line.trim()
+      if (trimmedLine !== "" && trimmedLine[0] !== '#')
+        count++
+    }
+    return count
+  } catch (error) {
+    return Promise.reject(error)
+  } finally {
+    if (fileHandle) {
+      await fileHandle.close()
+    }
+  }
+
+}
 
 // Write your Quaternion class here
