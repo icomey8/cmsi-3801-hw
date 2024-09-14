@@ -36,6 +36,7 @@ export function* powersGenerator({ ofBase, upTo }) {
         value = Math.pow(ofBase, exponent);
     }
 }
+
 // Write your say function here
 export function say(word) {
   say.words = say.words || []

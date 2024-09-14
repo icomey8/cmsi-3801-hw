@@ -35,6 +35,7 @@ function powers_generator(base, limit)
         end
     end)
 end
+
 -- Write your say function here
 function say(word)
   local words = {}
@@ -62,7 +63,7 @@ function meaningful_line_count(file)
     error("File not found: " .. err)
   end
   for line in f:lines() do
-    local trimmed_line = line:match("^%s*(.-)%s*$") -- lloks funky but removes whitespace
+    local trimmed_line = line:match("^%s*(.-)%s*$") -- looks funky but removes whitespace
     if trimmed_line ~= "" and trimmed_line:sub(1,1) ~= "#" then -- checks first char of first line
       count = count + 1
     end
@@ -134,4 +135,3 @@ function Quaternion.__eq(q1, q2)
 end
 
 return Quaternion
-

@@ -12,7 +12,6 @@ def change(amount: int) -> dict[int, int]:
         counts[denomination], remaining = divmod(remaining, denomination)
     return counts
 
-
 # Write your first then lower case function here
 def first_then_lower_case(strings, predicate, /):
   for str in strings:
@@ -56,7 +55,7 @@ def meaningful_line_count(file, /):
     except FileNotFoundError as e:
         raise 
     
-    
+# Write your Quaternion class here
 class Quaternion:
     def __init__(self, a: float, b: float, c: float, d: float):
         self.a = a
@@ -99,9 +98,3 @@ class Quaternion:
     @property
     def coefficients(self) -> tuple:
         return (self.a, self.b, self.c, self.d)
-
-    
-
-
-
-# Write your Quaternion class here
