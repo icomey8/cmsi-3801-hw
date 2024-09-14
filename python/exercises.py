@@ -31,19 +31,16 @@ def powers_generator(base, limit):
         value = base ** exponent
 
 # Write your say function here
-def say (word=None) :
-# Base case: if called without an argument, return an empty str
+def say(word=None):
     if word is None:
-        return" "
-    
-# Recursive function to accumulate words
-    def inner_say (next_word=None, words=[word]):
+        return ''
+
+    def inner_say(next_word=None, words=[word]):
         if next_word is None:
             return ' '.join(words)
         else:
-            words.append (next_word)
+            words.append(next_word)
             return lambda w=None: inner_say(w, words)
-   
     return inner_say
 
 # Write your line count function here

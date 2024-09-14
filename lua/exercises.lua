@@ -36,6 +36,23 @@ function powers_generator(base, limit)
     end)
 end
 -- Write your say function here
+function say(word)
+  local words = {}
+  local function addWord(str)
+  if str then
+    table.insert(words, str)
+    return addWord
+  else
+    return table.concat(words, " ")
+  end
+  end
+
+  if word then
+    return addWord(word)
+  else
+    return ""
+  end
+end
 
 -- Write your line count function here
 function meaningful_line_count(file)

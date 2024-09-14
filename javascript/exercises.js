@@ -37,6 +37,17 @@ export function* powersGenerator({ ofBase, upTo }) {
     }
 }
 // Write your say function here
+export function say(word) {
+  say.words = say.words || []
+  if (word !== undefined) {
+    say.words.push(word)
+    return say
+  }
+
+  const result = say.words.join(" ")
+  say.words = []
+  return result
+}
 
 // Write your line count function here
 export async function meaningfulLineCount(file) {
