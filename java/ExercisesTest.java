@@ -58,32 +58,32 @@ public class ExercisesTest {
 
         // Uncomment the following tests as you complete the exercises
 
-        // suite("firstThenLowerCase");
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of(), s -> !s.isEmpty()).isEmpty());
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of("", "A", "B"), s -> !s.isEmpty()).get().equals("a"));
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of("", "A", "ABC"), s -> s.length() > 3).isEmpty());
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of("ABC", "ABCD", "ABCDE"), s -> s.length() > 3).get().equals("abcd"));
+         suite("firstThenLowerCase");
+         expect(Exercises.firstThenLowerCase(
+                 List.of(), s -> !s.isEmpty()).isEmpty());
+         expect(Exercises.firstThenLowerCase(
+                 List.of("", "A", "B"), s -> !s.isEmpty()).get().equals("a"));
+         expect(Exercises.firstThenLowerCase(
+                 List.of("", "A", "ABC"), s -> s.length() > 3).isEmpty());
+         expect(Exercises.firstThenLowerCase(
+                 List.of("ABC", "ABCD", "ABCDE"), s -> s.length() > 3).get().equals("abcd"));
 
-        // suite("say");
-        // expect(Exercises.say().phrase().equals(""));
-        // expect(Exercises.say("hi").phrase().equals("hi"));
-        // expect(Exercises.say("Oh").and("kay").phrase().equals("Oh kay"));
-        // expect(Exercises.say("hello").and("my").and("name").and("is").and("Colette").phrase()
-        //         .equals("hello my name is Colette"));
-        // expect(Exercises.say("h i").phrase().equals("h i"));
-        // expect(Exercises.say("hi ").and("   there").phrase().equals("hi     there"));
-        // expect(Exercises.say("").and("").and("dog").and("").and("go").phrase()
-        //         .equals("  dog  go"));
-        // expect(Exercises.say("🐤🦇").and("$🦊👏🏽").and("!").phrase().equals("🐤🦇 $🦊👏🏽 !"));
-        // expect(Exercises.say("😄🤗").and("💀👊🏾").phrase().equals("😄🤗 💀👊🏾"));
+         suite("say");
+         expect(Exercises.say().phrase().equals(""));
+         expect(Exercises.say("hi").phrase().equals("hi"));
+         expect(Exercises.say("Oh").and("kay").phrase().equals("Oh kay"));
+         expect(Exercises.say("hello").and("my").and("name").and("is").and("Colette").phrase()
+                 .equals("hello my name is Colette"));
+         expect(Exercises.say("h i").phrase().equals("h i"));
+         expect(Exercises.say("hi ").and("   there").phrase().equals("hi     there"));
+         expect(Exercises.say("").and("").and("dog").and("").and("go").phrase()
+                 .equals("  dog  go"));
+         expect(Exercises.say("🐤🦇").and("$🦊👏🏽").and("!").phrase().equals("🐤🦇 $🦊👏🏽 !"));
+         expect(Exercises.say("😄🤗").and("💀👊🏾").phrase().equals("😄🤗 💀👊🏾"));
         // // Ensure there is no sharing of partial states!
-        // var greet = Exercises.say("Hello").and("there");
-        // expect(greet.and("nice").and("person").phrase().equals("Hello there nice person"));
-        // expect(greet.and("Swift").phrase().equals("Hello there Swift"));
+         var greet = Exercises.say("Hello").and("there");
+         expect(greet.and("nice").and("person").phrase().equals("Hello there nice person"));
+         expect(greet.and("Swift").phrase().equals("Hello there Swift"));
 
         // suite("meaningfulLineCount");
         // expectToThrow(
@@ -136,28 +136,28 @@ public class ExercisesTest {
         // expect(("" + new Quaternion(-1, -2, 0, 0)).equals("-1.0-2.0i"));
         // expect(("" + new Quaternion(1, 0, -2, 5)).equals("1.0-2.0j+5.0k"));
 
-        // suite("BinarySearchTree");
-        // BinarySearchTree t = new Empty();
-        // expect(t.size() == 0);
-        // expect(!t.contains("A"));
-        // expect(t.toString().equals("()"));
-        // t = t.insert("G");
-        // expect(t.size() == 1);
-        // expect(t.contains("G"));
-        // expect(!t.contains("A"));
-        // expect(t.toString().equals("(G)"));
-        // t = t.insert("B");
-        // expect(t.toString().equals("((B)G)"));
-        // t = t.insert("D");
-        // expect(t.toString().equals("((B(D))G)"));
-        // t = t.insert("H");
-        // expect(t.toString().equals("((B(D))G(H))"));
+         suite("BinarySearchTree");
+         BinarySearchTree t = new Empty();
+         expect(t.size() == 0);
+         expect(!t.contains("A"));
+         expect(t.toString().equals("()"));
+         t = t.insert("G");
+         expect(t.size() == 1);
+         expect(t.contains("G"));
+         expect(!t.contains("A"));
+//         expect(t.toString().equals("(G)"));
+//         t = t.insert("B");
+//         expect(t.toString().equals("((B)G)"));
+//         t = t.insert("D");
+//         expect(t.toString().equals("((B(D))G)"));
+//         t = t.insert("H");
+//         expect(t.toString().equals("((B(D))G(H))"));
         // t = t.insert("A");
         // expect(t.toString().equals("(((A)B(D))G(H))"));
         // t = t.insert("C");
         // t = t.insert("J");
-        // expect(t.size() == 7);
-        // expect(t.contains("J"));
+//         expect(t.size() == 7);
+//         expect(t.contains("J"));
         // expect(!t.contains("Z"));
         // expect(t.toString().equals("(((A)B((C)D))G(H(J)))"));
         // // Test immutability

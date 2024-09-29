@@ -21,12 +21,102 @@ public class Exercises {
     }
 
     // Write your first then lower case function here
+    public static Optional<String> firstThenLowerCase(List<String> strings, Predicate<String> predicate) {
+        return strings.stream().filter(predicate).findFirst().map(String::toLowerCase);
+    }
 
     // Write your say function here
+    public static record Sayer(String phrase) {
+        Sayer and(String word) {
+            String newPhrase = (!phrase.isEmpty() || word.isEmpty())
+                    ? phrase + " " + word
+                    : phrase + word;
+            return new Sayer(newPhrase);
+        }
+
+        public String phrase() {
+            return phrase;
+        }
+    }
+
+    public static Sayer say() {
+        return new Sayer("");
+    }
+
+    public static Sayer say(String word) {
+        return new Sayer(word);  // won't just be "word"
+    }
 
     // Write your line count function here
+
+
 }
 
 // Write your Quaternion record class here
 
 // Write your BinarySearchTree sealed interface and its implementations here
+sealed interface BinarySearchTree permits Empty, Node {
+    int size();
+    boolean contains(String value);
+    BinarySearchTree insert(String value);
+}
+
+final record Empty() implements BinarySearchTree {
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public boolean contains(String value) {
+        return false;
+    }
+
+    @Override
+    public BinarySearchTree insert(String value) {
+        return new Node(value, this, this);
+    }
+
+    @Override
+    public String toString() {
+        return "()";
+    }
+}
+
+final class Node implements BinarySearchTree {
+    private final String value;
+    private final BinarySearchTree left;
+    private final BinarySearchTree right;
+
+    Node(String value, BinarySearchTree left, BinarySearchTree right) {
+        this.value = value;
+        this.left = left;
+        this.right = right;
+    }
+
+    @Override
+    public int size() {
+        return 1 + left.size() + right.size();
+    }
+
+    @Override
+    public boolean contains(String value) {
+        return this.value.equals(value) || left.contains(value) || right.contains(value);
+    }
+
+    @Override
+    public BinarySearchTree insert(String value) {
+        if (value.compareTo(this.value) < 0) {
+            return new Node(this.value, left.insert(value), right);
+        } else {
+            return new Node(this.value, left, right.insert(value));
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "(" + left + value + right + ")";
+    }
+}
+
+
