@@ -47,13 +47,85 @@ public class Exercises {
         return new Sayer(word);  // won't just be "word"
     }
 
-    // Write your line count function here
-
+    public static long meaningfulLineCount(String filename) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            return reader.lines()
+                         .filter(line -> !line.trim().isEmpty() && !line.trim().startsWith("//"))
+                         .count();
+        }
+    }
 
 }
 
 // Write your Quaternion record class here
+record Quaternion(double a, double b, double c, double d) {
 
+    public static final Quaternion ZERO = new Quaternion(0, 0, 0, 0);
+    public static final Quaternion I = new Quaternion(0, 1, 0, 0);
+    public static final Quaternion J = new Quaternion(0, 0, 1, 0);
+    public static final Quaternion K = new Quaternion(0, 0, 0, 1);
+
+    public Quaternion plus(Quaternion q) {
+        return new Quaternion(a + q.a, b + q.b, c + q.c, d + q.d);
+    }
+
+    public Quaternion times(Quaternion q) {
+        double newA = a * q.a - b * q.b - c * q.c - d * q.d;
+        double newB = a * q.b + b * q.a + c * q.d - d * q.c;
+        double newC = a * q.c - b * q.d + c * q.a + d * q.b;
+        double newD = a * q.d + b * q.c - c * q.b + d * q.a;
+        return new Quaternion(newA, newB, newC, newD);
+    }
+
+    public List<Double> coefficients() {
+        return List.of(a, b, c, d);
+    }
+
+    public Quaternion conjugate() {
+        return new Quaternion(a, -b, -c, -d);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        if (a != 0) {
+            sb.append(a);
+        }
+
+        if (b != 0) {
+            if (b == 1) {
+                sb.append(sb.length() > 0 ? "+i" : "i");
+            } else if (b == -1) {
+                sb.append(sb.length() > 0 ? "-i" : "-i");
+            } else {
+                sb.append(b > 0 && sb.length() > 0 ? "+" : "").append(b).append("i");
+            }
+        }
+
+        if (c != 0) {
+            if (c == 1) {
+                sb.append(sb.length() > 0 ? "+j" : "j");
+            } else if (c == -1) {
+                sb.append(sb.length() > 0 ? "-j" : "-j");
+            } else {
+                sb.append(c > 0 && sb.length() > 0 ? "+" : "").append(c).append("j");
+            }
+        }
+
+        if (d != 0) {
+            if (d == 1) {
+                sb.append(sb.length() > 0 ? "+k" : "k");
+            } else if (d == -1) {
+                sb.append(sb.length() > 0 ? "-k" : "-k");
+            } else {
+                sb.append(d > 0 && sb.length() > 0 ? "+" : "").append(d).append("k");
+            }
+        }
+
+        return sb.length() == 0 ? "0" : sb.toString();
+    }
+}
 // Write your BinarySearchTree sealed interface and its implementations here
 sealed interface BinarySearchTree permits Empty, Node {
     int size();
