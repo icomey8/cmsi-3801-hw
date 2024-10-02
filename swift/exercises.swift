@@ -16,16 +16,21 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
 }
 
 // Write your first then lower case function here
-func firstThenLowerCase(of strings: [String?], satisfying predicate: (String) -> Bool) -> String? {
-    for string in strings {
-        if let unwrappedString = string, predicate(unwrappedString) {
-            return string?.lowercased()
-        }
-    }
-    return nil
+func firstThenLowerCase(of strings: [String], satisfying predicate: (String) -> Bool) -> String? {
+    return strings.first(where: predicate)?.lowercased()
 }
 
 // Write your say function here
+struct Sayer {
+    let phrase: String
+    func and(_ word: String) -> Sayer {
+        return Sayer(phrase: phrase + " " + word)
+    }
+}
+
+func say(_ word: String = "") -> Sayer {
+    return Sayer(phrase: word)
+}
 
 
 // Write your meaningfulLineCount function here
