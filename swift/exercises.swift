@@ -50,7 +50,8 @@ func meaningfulLineCount(_ fileName: String) -> Result<Int, Error> {
         return .failure(error)
     }
 }
-// Write your Quaternion struct here
+
+
 struct Quaternion: Equatable, CustomStringConvertible {
     let a: Double
     let b: Double
@@ -107,15 +108,68 @@ struct Quaternion: Equatable, CustomStringConvertible {
     }
 }
 // Write your Binary Search Tree enum here
-//enum BST {
-//    case empty
-//    indirect case node(BST?, String, BST?)
-//
-//    var size: Int {
-//        switch self {
-//            case .empty: return 00
-//            case let .node(left, _, right): return left.size + 1 + right.size
-//           }
-//    }
-//}
+enum BinarySearchTree: CustomStringConvertible {
+    case empty
+    indirect case node(BinarySearchTree?, String, BinarySearchTree?)
+
+    var size: Int {
+        switch self {
+            case .empty:
+                return 0
+            case let .node(left, _, right):
+                return 1 + (left?.size ?? 0) + (right?.size ?? 0)
+           }
+    }
+
+    func contains(_ value: String) -> Bool {
+        switch self {
+        case .empty:
+            return false
+        case let .node(left, v, right):
+            if value < v {
+                return left?.contains(value) ?? false
+            } else if value > v {
+                return right?.contains(value) ?? false
+            } else {
+                return true
+            }
+        }
+    }
+
+    func insert(_ value: String) -> BinarySearchTree {
+        switch self {
+        case .empty:
+            return .node(.empty, value, .empty)
+        case let .node(left, v, right):
+            if value < v {
+                return .node(left?.insert(value) ?? .empty, v, right)
+            } else if value > v {
+                return .node(left, v, right?.insert(value) ?? .empty)
+            } else {
+                return self
+            }
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .empty:
+            return "()"
+        case let .node(left, value, right):
+            let leftDesc = left?.description == "()" ? "" : left?.description ?? ""
+            let rightDesc = right?.description == "()" ? "" : right?.description ?? ""
+
+            if leftDesc.isEmpty && rightDesc.isEmpty {
+                return "(\(value))"
+            } else if leftDesc.isEmpty {
+                return "(\(value)\(rightDesc))"
+            } else if rightDesc.isEmpty {
+                return "(\(leftDesc)\(value))"
+            } else {
+                return "(\(leftDesc)\(value)\(rightDesc))"
+            }
+        }
+    }
+
+}
 

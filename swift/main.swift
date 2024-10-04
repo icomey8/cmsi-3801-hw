@@ -63,9 +63,9 @@ expect(firstThenLowerCase(of: ["ABC", "ABCD", "ABCDE"], satisfying: { $0.count >
  expect(greet.and("nice").and("person").phrase == "Hello there nice person")
  expect(greet.and("Swift").phrase == "Hello there Swift")
 
-// suite("meaningfulLineCount");
-// await expectFailure(meaningfulLineCount("NoSuchFile.txt"))
-// await expectSuccess(meaningfulLineCount("../test-for-line-count.txt"), 5)
+ suite("meaningfulLineCount");
+ await expectFailure(meaningfulLineCount("NoSuchFile.txt"))
+ await expectSuccess(meaningfulLineCount("../test-for-line-count.txt"), 5)
 
 // suite("Quaternion")
 // let q = Quaternion(a: 3.5, b: 2.25, c: -100, d: -1.25)
@@ -98,34 +98,34 @@ expect(firstThenLowerCase(of: ["ABC", "ABCD", "ABCDE"], satisfying: { $0.count >
 // expect("\(Quaternion(a: -1, b: -2, c: 0, d: 0))" == "-1.0-2.0i")
 // expect("\(Quaternion(a: 1, b: 0, c: -2, d: 5))" == "1.0-2.0j+5.0k")
 
-// suite("BinarySearchTree");
-// var t: BinarySearchTree = .empty
-// expect(t.size == 0);
-// expect(!t.contains("A"));
-// expect("\(t)" == "()")
-// t = t.insert("G");
-// expect(t.size == 1);
-// expect(t.contains("G"));
-// expect(!t.contains("A"));
-// expect("\(t)" == "(G)")
-// t = t.insert("B");
-// expect("\(t)" == "((B)G)")
-// t = t.insert("D");
-// expect("\(t)" == "((B(D))G)")
-// t = t.insert("H");
-// expect("\(t)" == "((B(D))G(H))")
-// t = t.insert("A");
-// expect("\(t)" == "(((A)B(D))G(H))")
-// t = t.insert("C");
-// t = t.insert("J");
-// expect(t.size == 7);
-// expect(t.contains("J"));
-// expect(!t.contains("Z"));
-// expect("\(t)" == "(((A)B((C)D))G(H(J)))")
-// // Test immutability
-// var t2: BinarySearchTree = t;
-// t2 = t2.insert("F");
-// expect(t2.size == 8);
-// expect(t.size == 7);
+ suite("BinarySearchTree");
+ var t: BinarySearchTree = .empty
+ expect(t.size == 0);
+ expect(!t.contains("A"));
+ expect("\(t)" == "()")
+ t = t.insert("G");
+ expect(t.size == 1);
+ expect(t.contains("G")); // works
+ expect(!t.contains("A")); // works
+ expect("\(t)" == "(G)")
+ t = t.insert("B");
+ expect("\(t)" == "((B)G)")
+ t = t.insert("D");
+ expect("\(t)" == "((B(D))G)")
+ t = t.insert("H");
+ expect("\(t)" == "((B(D))G(H))")
+ t = t.insert("A");
+ expect("\(t)" == "(((A)B(D))G(H))")
+ t = t.insert("C");
+ t = t.insert("J");
+ expect(t.size == 7);
+ expect(t.contains("J"));
+ expect(!t.contains("Z"));
+ expect("\(t)" == "(((A)B((C)D))G(H(J)))")
+ // Test immutability
+ var t2: BinarySearchTree = t;
+ t2 = t2.insert("F");
+ expect(t2.size == 8);
+ expect(t.size == 7);
 
 print("\n\(passed) passed, \(failed) failed")
