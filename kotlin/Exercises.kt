@@ -84,24 +84,79 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
         return listOf(a, b, c, d)
     }
 
+    // Fixed toString method
     override fun toString(): String {
         val parts = mutableListOf<String>()
 
+        // Add real part (a)
         if (a != 0.0) parts.add("$a")
+
+        // Add imaginary part (b, c, d) with proper sign handling
         if (b == 1.0) parts.add("i")
         else if (b == -1.0) parts.add("-i")
-        else if (b != 0.0) parts.add("${b}i")
+        else if (b != 0.0) parts.add("${if (b > 0 && parts.isNotEmpty()) "+" else ""}${b}i")
 
         if (c == 1.0) parts.add("j")
         else if (c == -1.0) parts.add("-j")
-        else if (c != 0.0) parts.add("${c}j")
+        else if (c != 0.0) parts.add("${if (c > 0 && parts.isNotEmpty()) "+" else ""}${c}j")
 
         if (d == 1.0) parts.add("k")
         else if (d == -1.0) parts.add("-k")
-        else if (d != 0.0) parts.add("${d}k")
+        else if (d != 0.0) parts.add("${if (d > 0 && parts.isNotEmpty()) "+" else ""}${d}k")
 
-        return if (parts.isEmpty()) "0" else parts.joinToString(separator = "")
+        // If no parts were added, return "0"
+        return if (parts.isEmpty()) "0" else parts.joinToString("")  // Ensures no spaces between parts
     }
 }
 
-// Write your Binary Search Tree interface and implementing classes here
+
+
+
+
+
+// Write your Binary Search Tree interface and implementing classes 
+
+sealed class BinarySearchTree {
+    abstract fun size(): Int
+    abstract fun contains(value: String): Boolean
+    abstract fun insert(value: String): BinarySearchTree
+
+    object Empty : BinarySearchTree() {
+        override fun size() = 0
+        override fun contains(value: String) = false
+        override fun insert(value: String): BinarySearchTree = Node(value, this, this)
+        override fun toString() = "()"
+    }
+
+    data class Node(
+        val value: String,
+        val left: BinarySearchTree,
+        val right: BinarySearchTree
+    ) : BinarySearchTree() {
+        private val _size = 1 + left.size() + right.size()
+
+        override fun size() = _size
+
+        override fun contains(value: String): Boolean {
+            return when {
+                value < this.value -> left.contains(value)
+                value > this.value -> right.contains(value)
+                else -> true
+            }
+        }
+
+        override fun insert(value: String): BinarySearchTree {
+            return when {
+                value < this.value -> Node(this.value, left.insert(value), right)
+                value > this.value -> Node(this.value, left, right.insert(value))
+                else -> this
+            }
+        }
+
+        override fun toString(): String {
+            val leftStr = if (left is Empty) "" else left.toString()
+            val rightStr = if (right is Empty) "" else right.toString()
+            return "($leftStr$value$rightStr)"
+        }
+    }
+}
