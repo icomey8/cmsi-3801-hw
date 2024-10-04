@@ -58,53 +58,81 @@ struct Quaternion: Equatable, CustomStringConvertible {
     let c: Double
     let d: Double
 
+    // Constants for zero and unit quaternions
     static let ZERO = Quaternion(a: 0, b: 0, c: 0, d: 0)
     static let I = Quaternion(a: 0, b: 1, c: 0, d: 0)
     static let J = Quaternion(a: 0, b: 0, c: 1, d: 0)
     static let K = Quaternion(a: 0, b: 0, c: 0, d: 1)
 
-    static func + (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
-        return Quaternion(
-            a: lhs.a + rhs.a,
-            b: lhs.b + rhs.b,
-            c: lhs.c + rhs.c,
-            d: lhs.d + rhs.d
-        )
+    // Initializer
+    init(a: Double = 0, b: Double = 0, c: Double = 0, d: Double = 0) {
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
     }
 
-    static func * (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
-        let newA = lhs.a * rhs.a - lhs.b * rhs.b - lhs.c * rhs.c - lhs.d * rhs.d
-        let newB = lhs.a * rhs.b + lhs.b * rhs.a + lhs.c * rhs.d - lhs.d * rhs.c
-        let newC = lhs.a * rhs.c - lhs.b * rhs.d + lhs.c * rhs.a + lhs.d * rhs.b
-        let newD = lhs.a * rhs.d + lhs.b * rhs.c - lhs.c * rhs.b + lhs.d * rhs.a
-        return Quaternion(a: newA, b: newB, c: newC, d: newD)
-    }
-
-    var conjugate: Quaternion {
-        return Quaternion(a: a, b: -b, c: -c, d: -d)
-    }
-
+    // coefficients
     var coefficients: [Double] {
         return [a, b, c, d]
     }
 
+    // Conjugate quaternion
+    var conjugate: Quaternion {
+        return Quaternion(a: a, b: -b, c: -c, d: -d)
+    }
+
+    // CustomStringConvertible conformance for pretty printing
     var description: String {
-        var parts: [String] = []
+        var components: [String] = []
 
-        if a != 0 { parts.append("\(a)") }
-        if b == 1 { parts.append("i") }
-        else if b == -1 { parts.append("-i") }
-        else if b != 0 { parts.append("\(b)i") }
+        // Handle the real part (a)
+        if a != 0 {
+            components.append(String(format: "%.1f", a)) // Always show one decimal place for real part
+        }
 
-        if c == 1 { parts.append("j") }
-        else if c == -1 { parts.append("-j") }
-        else if c != 0 { parts.append("\(c)j") }
+        // Handle the i component (b)
+        if b != 0 {
+            let sign = b < 0 ? "-" : (components.isEmpty ? "" : "+")
+            let bValue = abs(b) == 1 ? "" : String(format: "%.2f", abs(b)) // Omit "1" for unit values
+            components.append("\(sign)\(bValue)i")
+        }
 
-        if d == 1 { parts.append("k") }
-        else if d == -1 { parts.append("-k") }
-        else if d != 0 { parts.append("\(d)k") }
+        // Handle the j component (c)
+        if c != 0 {
+            let sign = c < 0 ? "-" : (components.isEmpty ? "" : "+")
+            let cValue = abs(c) == 1 ? "" : String(format: "%.1f", abs(c)) // Omit "1" for unit values
+            components.append("\(sign)\(cValue)j")
+        }
 
-        return parts.isEmpty ? "0" : parts.joined(separator: "")
+        // Handle the k component (d)
+        if d != 0 {
+            let sign = d < 0 ? "-" : (components.isEmpty ? "" : "+")
+            let dValue = abs(d) == 1 ? "" : String(format: "%.2f", abs(d)) // Omit "1" for unit values
+            components.append("\(sign)\(dValue)k")
+        }
+
+        // If no components are non-zero, return "0"
+        return components.isEmpty ? "0" : components.joined()
+    }
+
+    //addition
+    static func + (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
+        return Quaternion(a: lhs.a + rhs.a, b: lhs.b + rhs.b, c: lhs.c + rhs.c, d: lhs.d + rhs.d)
+    }
+
+    //multiplication
+    static func * (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
+        let a = lhs.a * rhs.a - lhs.b * rhs.b - lhs.c * rhs.c - lhs.d * rhs.d
+        let b = lhs.a * rhs.b + lhs.b * rhs.a + lhs.c * rhs.d - lhs.d * rhs.c
+        let c = lhs.a * rhs.c - lhs.b * rhs.d + lhs.c * rhs.a + lhs.d * rhs.b
+        let d = lhs.a * rhs.d + lhs.b * rhs.c - lhs.c * rhs.b + lhs.d * rhs.a
+        return Quaternion(a: a, b: b, c: c, d: d)
+    }
+
+    // Equatable conformance
+    static func == (lhs: Quaternion, rhs: Quaternion) -> Bool {
+        return lhs.a == rhs.a && lhs.b == rhs.b && lhs.c == rhs.c && lhs.d == rhs.d
     }
 }
 // Write your Binary Search Tree enum here
