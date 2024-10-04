@@ -60,15 +60,42 @@ public class Exercises {
 // Write your Quaternion record class here
 record Quaternion(double a, double b, double c, double d) {
 
+    // Predefined constants
     public static final Quaternion ZERO = new Quaternion(0, 0, 0, 0);
     public static final Quaternion I = new Quaternion(0, 1, 0, 0);
     public static final Quaternion J = new Quaternion(0, 0, 1, 0);
     public static final Quaternion K = new Quaternion(0, 0, 0, 1);
 
+    // Constructor validation for NaN values
+    public Quaternion {
+        if (Double.isNaN(a) || Double.isNaN(b) || Double.isNaN(c) || Double.isNaN(d)) {
+            throw new IllegalArgumentException("Coefficients cannot be NaN");
+        }
+    }
+
+    // Explicit getter methods to match the test code
+    public double a() {
+        return this.a;
+    }
+
+    public double b() {
+        return this.b;
+    }
+
+    public double c() {
+        return this.c;
+    }
+
+    public double d() {
+        return this.d;
+    }
+
+    //Addition
     public Quaternion plus(Quaternion q) {
         return new Quaternion(a + q.a, b + q.b, c + q.c, d + q.d);
     }
 
+    // Multiplication
     public Quaternion times(Quaternion q) {
         double newA = a * q.a - b * q.b - c * q.c - d * q.d;
         double newB = a * q.b + b * q.a + c * q.d - d * q.c;
@@ -77,14 +104,17 @@ record Quaternion(double a, double b, double c, double d) {
         return new Quaternion(newA, newB, newC, newD);
     }
 
+    // Coefficients
     public List<Double> coefficients() {
         return List.of(a, b, c, d);
     }
 
+    // Conjugate quaternion
     public Quaternion conjugate() {
         return new Quaternion(a, -b, -c, -d);
     }
 
+    // String rep
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -93,6 +123,7 @@ record Quaternion(double a, double b, double c, double d) {
             sb.append(a);
         }
 
+        // Imaginary parts
         if (b != 0) {
             if (b == 1) {
                 sb.append(sb.length() > 0 ? "+i" : "i");
@@ -123,9 +154,11 @@ record Quaternion(double a, double b, double c, double d) {
             }
         }
 
+        // If no components were added, return 0
         return sb.length() == 0 ? "0" : sb.toString();
     }
 }
+
 // Write your BinarySearchTree sealed interface and its implementations here
 sealed interface BinarySearchTree permits Empty, Node {
     int size();
