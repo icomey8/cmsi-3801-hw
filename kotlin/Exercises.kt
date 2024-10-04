@@ -17,12 +17,10 @@ fun change(amount: Long): Map<Int, Long> {
     return counts
 }
 
-// Write your first then lower case function here
 fun firstThenLowerCase (a: List<String>, predicate: (String) -> Boolean): String? {
     return a.firstOrNull(predicate)?.lowercase()
 }
 
-// Write your say function
 data class Say(val phrase: String) {
     fun and(nextPhrase: String): Say {
         return Say("$phrase $nextPhrase")
@@ -33,10 +31,8 @@ fun say(phrase: String = ""): Say {
     return Say(phrase)
 }
 
-
 fun meaningfulLineCount(filename: String): Long {
     val file = File(filename)
-
     if (!file.exists()) {
         throw IOException("No such file")
     }
@@ -46,12 +42,11 @@ fun meaningfulLineCount(filename: String): Long {
             .filter { line ->
                 val trimmed = line.trim()
                 trimmed.isNotEmpty() && !trimmed.startsWith("#")
-            }
-            .count()
+            }.count()
     }
 }
-data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double) {
 
+data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double) {
     companion object {
         val ZERO = Quaternion(0.0, 0.0, 0.0, 0.0)
         val I = Quaternion(0.0, 1.0, 0.0, 0.0)
@@ -84,14 +79,10 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
         return listOf(a, b, c, d)
     }
 
-    // Fixed toString method
     override fun toString(): String {
         val parts = mutableListOf<String>()
-
-        // Add real part (a)
         if (a != 0.0) parts.add("$a")
 
-        // Add imaginary part (b, c, d) with proper sign handling
         if (b == 1.0) parts.add("i")
         else if (b == -1.0) parts.add("-i")
         else if (b != 0.0) parts.add("${if (b > 0 && parts.isNotEmpty()) "+" else ""}${b}i")
@@ -104,17 +95,9 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
         else if (d == -1.0) parts.add("-k")
         else if (d != 0.0) parts.add("${if (d > 0 && parts.isNotEmpty()) "+" else ""}${d}k")
 
-        // If no parts were added, return "0"
-        return if (parts.isEmpty()) "0" else parts.joinToString("")  // Ensures no spaces between parts
+        return if (parts.isEmpty()) "0" else parts.joinToString("")
     }
 }
-
-
-
-
-
-
-// Write your Binary Search Tree interface and implementing classes 
 
 sealed class BinarySearchTree {
     abstract fun size(): Int
@@ -134,9 +117,7 @@ sealed class BinarySearchTree {
         val right: BinarySearchTree
     ) : BinarySearchTree() {
         private val _size = 1 + left.size() + right.size()
-
         override fun size() = _size
-
         override fun contains(value: String): Boolean {
             return when {
                 value < this.value -> left.contains(value)

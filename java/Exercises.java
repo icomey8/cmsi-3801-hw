@@ -20,12 +20,10 @@ public class Exercises {
         return counts;
     }
 
-    // Write your first then lower case function here
     public static Optional<String> firstThenLowerCase(List<String> strings, Predicate<String> predicate) {
         return strings.stream().filter(predicate).findFirst().map(String::toLowerCase);
     }
 
-    // Write your say function here
     public static record Sayer(String phrase) {
         Sayer and(String word) {
             String newPhrase = (!phrase.isEmpty() || word.isEmpty())
@@ -44,7 +42,7 @@ public class Exercises {
     }
 
     public static Sayer say(String word) {
-        return new Sayer(word);  // won't just be "word"
+        return new Sayer(word);
     }
 
     public static long meaningfulLineCount(String filename) throws IOException {
@@ -54,26 +52,20 @@ public class Exercises {
                          .count();
         }
     }
-
 }
 
-// Write your Quaternion record class here
 record Quaternion(double a, double b, double c, double d) {
-
-    // Predefined constants
     public static final Quaternion ZERO = new Quaternion(0, 0, 0, 0);
     public static final Quaternion I = new Quaternion(0, 1, 0, 0);
     public static final Quaternion J = new Quaternion(0, 0, 1, 0);
     public static final Quaternion K = new Quaternion(0, 0, 0, 1);
 
-    // Constructor validation for NaN values
     public Quaternion {
         if (Double.isNaN(a) || Double.isNaN(b) || Double.isNaN(c) || Double.isNaN(d)) {
             throw new IllegalArgumentException("Coefficients cannot be NaN");
         }
     }
 
-    // Explicit getter methods to match the test code
     public double a() {
         return this.a;
     }
@@ -90,12 +82,10 @@ record Quaternion(double a, double b, double c, double d) {
         return this.d;
     }
 
-    //Addition
     public Quaternion plus(Quaternion q) {
         return new Quaternion(a + q.a, b + q.b, c + q.c, d + q.d);
     }
 
-    // Multiplication
     public Quaternion times(Quaternion q) {
         double newA = a * q.a - b * q.b - c * q.c - d * q.d;
         double newB = a * q.b + b * q.a + c * q.d - d * q.c;
@@ -104,17 +94,14 @@ record Quaternion(double a, double b, double c, double d) {
         return new Quaternion(newA, newB, newC, newD);
     }
 
-    // Coefficients
     public List<Double> coefficients() {
         return List.of(a, b, c, d);
     }
 
-    // Conjugate quaternion
     public Quaternion conjugate() {
         return new Quaternion(a, -b, -c, -d);
     }
 
-    // String rep
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -123,7 +110,6 @@ record Quaternion(double a, double b, double c, double d) {
             sb.append(a);
         }
 
-        // Imaginary parts
         if (b != 0) {
             if (b == 1) {
                 sb.append(sb.length() > 0 ? "+i" : "i");
@@ -153,13 +139,10 @@ record Quaternion(double a, double b, double c, double d) {
                 sb.append(d > 0 && sb.length() > 0 ? "+" : "").append(d).append("k");
             }
         }
-
-        // If no components were added, return 0
         return sb.length() == 0 ? "0" : sb.toString();
     }
 }
 
-// Write your BinarySearchTree sealed interface and its implementations here
 sealed interface BinarySearchTree permits Empty, Node {
     int size();
     boolean contains(String value);

@@ -15,12 +15,10 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
     return .success(counts)
 }
 
-// Write your first then lower case function here
 func firstThenLowerCase(of strings: [String], satisfying predicate: (String) -> Bool) -> String? {
     return strings.first(where: predicate)?.lowercased()
 }
 
-// Write your say function here
 struct Sayer {
     let phrase: String
     func and(_ word: String) -> Sayer {
@@ -33,14 +31,11 @@ func say(_ word: String = "") -> Sayer {
 }
 
 
-// Write your meaningfulLineCount function here
 func meaningfulLineCount(_ fileName: String) -> Result<Int, Error> {
     do {
         let fileURL = URL(fileURLWithPath: fileName)
         let fileContents = try String(contentsOf: fileURL)
         let lines = fileContents.split(separator: "\n")
-        
-        // Filter meaningful lines
         let meaningfulLines = lines.filter { line in
             let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
             return !trimmed.isEmpty && !trimmed.hasPrefix("#")
@@ -58,13 +53,11 @@ struct Quaternion: Equatable, CustomStringConvertible {
     let c: Double
     let d: Double
 
-    // Constants for zero and unit quaternions
     static let ZERO = Quaternion(a: 0, b: 0, c: 0, d: 0)
     static let I = Quaternion(a: 0, b: 1, c: 0, d: 0)
     static let J = Quaternion(a: 0, b: 0, c: 1, d: 0)
     static let K = Quaternion(a: 0, b: 0, c: 0, d: 1)
 
-    // Initializer
     init(a: Double = 0, b: Double = 0, c: Double = 0, d: Double = 0) {
         self.a = a
         self.b = b
@@ -72,56 +65,46 @@ struct Quaternion: Equatable, CustomStringConvertible {
         self.d = d
     }
 
-    // coefficients
     var coefficients: [Double] {
         return [a, b, c, d]
     }
 
-    // Conjugate quaternion
     var conjugate: Quaternion {
         return Quaternion(a: a, b: -b, c: -c, d: -d)
     }
 
-    // CustomStringConvertible conformance for pretty printing
     var description: String {
         var components: [String] = []
 
-        // Handle the real part (a)
         if a != 0 {
             components.append(String(format: "%.1f", a)) // Always show one decimal place for real part
         }
 
-        // Handle the i component (b)
         if b != 0 {
             let sign = b < 0 ? "-" : (components.isEmpty ? "" : "+")
             let bValue = abs(b) == 1 ? "" : String(format: "%.2f", abs(b)) // Omit "1" for unit values
             components.append("\(sign)\(bValue)i")
         }
 
-        // Handle the j component (c)
         if c != 0 {
             let sign = c < 0 ? "-" : (components.isEmpty ? "" : "+")
             let cValue = abs(c) == 1 ? "" : String(format: "%.1f", abs(c)) // Omit "1" for unit values
             components.append("\(sign)\(cValue)j")
         }
 
-        // Handle the k component (d)
         if d != 0 {
             let sign = d < 0 ? "-" : (components.isEmpty ? "" : "+")
             let dValue = abs(d) == 1 ? "" : String(format: "%.2f", abs(d)) // Omit "1" for unit values
             components.append("\(sign)\(dValue)k")
         }
 
-        // If no components are non-zero, return "0"
         return components.isEmpty ? "0" : components.joined()
     }
 
-    //addition
     static func + (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
         return Quaternion(a: lhs.a + rhs.a, b: lhs.b + rhs.b, c: lhs.c + rhs.c, d: lhs.d + rhs.d)
     }
 
-    //multiplication
     static func * (lhs: Quaternion, rhs: Quaternion) -> Quaternion {
         let a = lhs.a * rhs.a - lhs.b * rhs.b - lhs.c * rhs.c - lhs.d * rhs.d
         let b = lhs.a * rhs.b + lhs.b * rhs.a + lhs.c * rhs.d - lhs.d * rhs.c
@@ -130,12 +113,11 @@ struct Quaternion: Equatable, CustomStringConvertible {
         return Quaternion(a: a, b: b, c: c, d: d)
     }
 
-    // Equatable conformance
     static func == (lhs: Quaternion, rhs: Quaternion) -> Bool {
         return lhs.a == rhs.a && lhs.b == rhs.b && lhs.c == rhs.c && lhs.d == rhs.d
     }
 }
-// Write your Binary Search Tree enum here
+
 enum BinarySearchTree: CustomStringConvertible {
     case empty
     indirect case node(BinarySearchTree?, String, BinarySearchTree?)
@@ -198,6 +180,5 @@ enum BinarySearchTree: CustomStringConvertible {
             }
         }
     }
-
 }
 
