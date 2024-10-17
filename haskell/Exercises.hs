@@ -1,6 +1,6 @@
 module Exercises
     ( change,
-      -- put the proper exports here
+      firstThenApply
     ) where
 
 import qualified Data.Map as Map
@@ -20,7 +20,8 @@ change amount
                 (count, newRemaining) = remaining `divMod` d
                 newCounts = Map.insert d count counts
 
--- Write your first then apply function here
+firstThenApply :: [a] -> (a -> Bool) -> (a -> b) -> Maybe b
+firstThenApply xs pred f = fmap f (find pred xs)
 
 -- Write your infinite powers generator here
 

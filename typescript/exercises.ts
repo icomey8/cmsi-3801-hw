@@ -13,12 +13,49 @@ export function change(amount: bigint): Map<bigint, bigint> {
   return counts
 }
 
-// Write your first then apply function here
+export function firstThenApply<T, U> (items: T[], predicate: (item: T) => boolean, consumer: (item: T) => U): U | undefined {
+  const result = items.find((item) => predicate(item))
+  return result ? consumer(result) : undefined
+}
 
-// Write your powers generator here
+
+export function* powersGenerator(base: bigint): Generator<bigint> {
+  for (let power = 1n; ; power *= base) {
+    yield power
+  }
+}
 
 // Write your line count function here
 
-// Write your shape type and associated functions here
+
+interface Sphere {
+  kind: "Sphere"
+  radius: number
+}
+interface Box {
+  kind: "Box"
+  width: number
+  length: number
+  depth: number
+}
+
+export function volume(shape: Shape): number {
+  if (shape.kind === "Sphere") {
+    return (4 / 3) * Math.PI * (shape.radius ** 3)
+  } else {
+    return shape.width * shape.length * shape.depth
+  }
+}
+
+export function surfaceArea(shape: Shape): number {
+  if (shape.kind === "Sphere") {
+    return (4 * Math.PI * (shape.radius ** 2))
+  } else {
+    return 2 * (shape.width * shape.length + shape.length * shape.depth + shape.depth * shape.width)
+  }
+}
+
+export type Shape = Sphere | Box
+
 
 // Write your binary search tree implementation here
