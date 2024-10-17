@@ -6,6 +6,10 @@ Welcome!
 - Worked on by *Jaime and Ian*. Daniel Munoz started in our group originally and provided the Question 3 code, but decided to work and submit individually moving forward.
 - This assignment tested our existing understanding of Javascript and Python, and introduced a new language with Lua.
 
+**Homework 2**
+- Worked on by *Jaime and Ian*. 
+- This assignment focused on Swift, Kotlin, and Java. Key concepts include information hiding, immutability, and objects.
+
 ## The Test Suites
 
 The test files are included in the repo already. They are available for YOU! They will help you not only learn the languages and concepts covered in this course, but to help you with professional practice. You should get accustomed to writing code to make tests pass. As you grow in your profession, you will get used to writing your tests early.
