@@ -25,6 +25,7 @@ export function* powersGenerator(base: bigint): Generator<bigint> {
   }
 }
 
+
 // Write your line count function here
 
 
@@ -49,7 +50,7 @@ export function volume(shape: Shape): number {
 
 export function surfaceArea(shape: Shape): number {
   if (shape.kind === "Sphere") {
-    return (4 * Math.PI * (shape.radius ** 2))
+    return 4 * Math.PI * (shape.radius ** 2)
   } else {
     return 2 * (shape.width * shape.length + shape.length * shape.depth + shape.depth * shape.width)
   }
@@ -58,4 +59,25 @@ export function surfaceArea(shape: Shape): number {
 export type Shape = Sphere | Box
 
 
-// Write your binary search tree implementation here
+export interface BinarySearchTree<T> {
+  size(): number
+  insert(value: T): BinarySearchTree<T>
+  contains(value: T): boolean
+  inorder(): Iterable<T>
+}
+
+export class Empty<T> implements BinarySearchTree<T> {
+  size(): number {
+    return 0
+  }
+  insert(value: T): BinarySearchTree<T> {
+    return new Node(value, new Empty(), new Empty())
+  }
+  contains(value: T): boolean {
+    return false
+  }
+  // generate inorder as an iterable, not as a symbol
+  inorder(): Iterable<T> {
+    return []
+  }
+}
