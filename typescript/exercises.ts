@@ -18,7 +18,6 @@ export function firstThenApply<T, U> (items: T[], predicate: (item: T) => boolea
   return result ? consumer(result) : undefined
 }
 
-
 export function* powersGenerator(base: bigint): Generator<bigint> {
   for (let power = 1n; ; power *= base) {
     yield power
@@ -27,7 +26,6 @@ export function* powersGenerator(base: bigint): Generator<bigint> {
 
 
 // Write your line count function here
-
 
 interface Sphere {
   kind: "Sphere"
@@ -107,11 +105,13 @@ class Node<T> implements BinarySearchTree<T> {
   }
 
   toString(): string {
-      return `[${[...this.inorder()].join(", ")}]`;
+    const leftStr = this.left instanceof Empty ? "" : this.left.toString();
+    const rightStr = this.right instanceof Empty ? "" : this.right.toString();
+    return `(${leftStr}${this.nodeValue}${rightStr})`;
   }
 }
 
-class Empty<T> implements BinarySearchTree<T> {
+export class Empty<T> implements BinarySearchTree<T> {
   size(): number {
       return 0;
   }
@@ -127,8 +127,8 @@ class Empty<T> implements BinarySearchTree<T> {
   *inorder(): Iterable<T> {}
 
   toString(): string {
-      return "[]";
+      return "()";
   }
 }
 
-export { Empty };
+
