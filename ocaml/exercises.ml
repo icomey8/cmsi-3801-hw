@@ -20,14 +20,13 @@ let non_empty (s : string) : bool =
   String.length s > 0
 
 
-let first_then_apply (lst : string list) (predicate : string -> bool) (f : string -> string) : string option =
-  (* Use List.find_opt directly on predicate *)
-  match List.find_opt predicate lst with
-  | Some x -> Some (f x)  (* Apply  function if element is found *)
-  | None -> None          (* Return None if no match is found *)
-
-(* Transformation function *)
-let lower (s : string) : string = String.lowercase_ascii s
+  let first_then_apply (lst : 'a list) (predicate : 'a -> bool) (f : 'a -> 'b option) : 'b option =
+    match List.find_opt predicate lst with
+    | Some x -> f x  (* Apply function if element is found *)
+    | None -> None   (* Return None if no match is found *)
+  
+  (* Transformation function *)
+  let lower (s : string) : string option = Some (String.lowercase_ascii s)
 
 
 (* Write your powers generator here *)
