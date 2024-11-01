@@ -10,6 +10,10 @@ Welcome!
 - Worked on by *Jaime and Ian*. 
 - This assignment focused on Swift, Kotlin, and Java. Key concepts include information hiding, immutability, and objects.
 
+**Homework 3**
+- Worked on by *Jaime and Ian*.
+- This assignment strongly focused on user-defined types in Typescript, Haskell, and OCaml. 
+
 ## The Test Suites
 
 The test files are included in the repo already. They are available for YOU! They will help you not only learn the languages and concepts covered in this course, but to help you with professional practice. You should get accustomed to writing code to make tests pass. As you grow in your profession, you will get used to writing your tests early.
