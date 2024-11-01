@@ -26,8 +26,23 @@ export function* powersGenerator(base: bigint): Generator<bigint> {
 }
 
 
-// Write your line count function here
+export async function countValidLines(filePath: string): Promise<number> {
+    const fileStream = createReadStream(filePath);
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity,
+    });
 
+    let lineCount = 0;
+    for await (const line of rl) {
+        const trimmedLine = line.trim();
+        if (trimmedLine !== '' && !trimmedLine.startsWith('#')) {
+            lineCount++;
+        }
+    }
+
+    return lineCount;
+}
 
 interface Sphere {
   kind: "Sphere"
