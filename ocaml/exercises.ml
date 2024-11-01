@@ -4,7 +4,7 @@ let change (amount : int) : int list =
   if amount < 0 then
     raise Negative_Amount
   else if amount = 0 then
-    [0; 0; 0; 0]  (* Special case for 0 *)
+    [0; 0; 0; 0]  
   else
     let denominations = [25; 10; 5; 1] in
     let rec aux (remaining : int) (denoms : int list) : int list =
@@ -22,14 +22,12 @@ let non_empty (s : string) : bool =
 
   let first_then_apply (lst : 'a list) (predicate : 'a -> bool) (f : 'a -> 'b option) : 'b option =
     match List.find_opt predicate lst with
-    | Some x -> f x  (* Apply function if element is found *)
-    | None -> None   (* Return None if no match is found *)
+    | Some x -> f x  
+    | None -> None   
   
-  (* Transformation function *)
   let lower (s : string) : string option = Some (String.lowercase_ascii s)
 
 
-(* Write your powers generator here *)
 let rec int_pow (base : int) (exp : int) : int =
   if exp = 0 then 1
   else base * int_pow base (exp - 1)
@@ -42,17 +40,12 @@ let rec powers_generator (b : int) : int Seq.t =
 
 
 
-(* Write your line count function here *)
   
   let valid_line (line : string) : bool =
-    (* Trim whitespace *)
     let trimmed = String.trim line in
-    (* Check if the line is non-empty*)
     String.length trimmed > 0 && trimmed.[0] <> '#'
   
-  (* Function to count valid lines in a file *)
-  let count_lines (filename : string) : int =
-    (* Open and process the file *)
+  let meaningful_line_count (filename : string) : int =
     let in_channel = open_in filename in
     Fun.protect
       (fun () ->
@@ -66,8 +59,10 @@ let rec powers_generator (b : int) : int Seq.t =
       )
       ~finally:(fun () -> close_in in_channel)
   
+  
 
-(* Write your shape type and associated functions here *)
+  
+
 
 type shape =
   | Box of float * float * float
@@ -83,14 +78,12 @@ let surface_area (s : shape) : float =
   | Box (w, h, d) -> 2.0 *. ((w *. h) +. (w *. d) +. (h *. d))
   | Sphere r -> 4.0 *. Float.pi *. r ** 2.0
 
-(* Write your binary search tree implementation here *)
 
 
 type 'a bst =
   | Empty
   | Node of 'a * 'a bst * 'a bst
 
-(* Inserts value into binary search tree *)
 let rec insert (x : 'a) (tree : 'a bst) : 'a bst =
   match tree with
   | Empty -> Node (x, Empty, Empty)
@@ -100,7 +93,7 @@ let rec insert (x : 'a) (tree : 'a bst) : 'a bst =
     else if x > v then
       Node (v, left, insert x right)
     else
-      tree  (* If value is already present *)
+      tree  
 
 (* Contains function*)
 let rec contains (x : 'a) (tree : 'a bst) : bool =
@@ -122,4 +115,3 @@ let rec size (tree : 'a bst) : int =
   match tree with
   | Empty -> 0
   | Node (_, left, right) -> 1 + size left + size right
-
