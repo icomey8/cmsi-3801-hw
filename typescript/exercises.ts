@@ -60,24 +60,75 @@ export type Shape = Sphere | Box
 
 
 export interface BinarySearchTree<T> {
-  size(): number
-  insert(value: T): BinarySearchTree<T>
-  contains(value: T): boolean
-  inorder(): Iterable<T>
+  size(): number;
+  insert(value: T): BinarySearchTree<T>;
+  contains(value: T): boolean;
+  inorder(): Iterable<T>;
+  toString(): string;
 }
 
-export class Empty<T> implements BinarySearchTree<T> {
+class Node<T> implements BinarySearchTree<T> {
+  private readonly left: BinarySearchTree<T>;
+  private readonly right: BinarySearchTree<T>;
+  private readonly nodeValue: T;
+  private readonly nodeSize: number;
+
+  constructor(value: T, left: BinarySearchTree<T> = new Empty<T>(), right: BinarySearchTree<T> = new Empty<T>()) {
+      this.nodeValue = value;
+      this.left = left;
+      this.right = right;
+      this.nodeSize = left.size() + 1 + right.size();
+  }
+
   size(): number {
-    return 0
+      return this.nodeSize;
   }
+
   insert(value: T): BinarySearchTree<T> {
-    return new Node(value, new Empty(), new Empty())
+      if (value < this.nodeValue) {
+          return new Node(this.nodeValue, this.left.insert(value), this.right);
+      } else if (value > this.nodeValue) {
+          return new Node(this.nodeValue, this.left, this.right.insert(value));
+      } else {
+          return this; // value is already in the tree
+      }
   }
+
   contains(value: T): boolean {
-    return false
+      if (value < this.nodeValue) return this.left.contains(value);
+      else if (value > this.nodeValue) return this.right.contains(value);
+      else return true;
   }
-  // generate inorder as an iterable, not as a symbol
-  inorder(): Iterable<T> {
-    return []
+
+  *inorder(): Iterable<T> {
+      yield* this.left.inorder();
+      yield this.nodeValue;
+      yield* this.right.inorder();
+  }
+
+  toString(): string {
+      return `[${[...this.inorder()].join(", ")}]`;
   }
 }
+
+class Empty<T> implements BinarySearchTree<T> {
+  size(): number {
+      return 0;
+  }
+
+  insert(value: T): BinarySearchTree<T> {
+      return new Node(value);
+  }
+
+  contains(_value: T): boolean {
+      return false;
+  }
+
+  *inorder(): Iterable<T> {}
+
+  toString(): string {
+      return "[]";
+  }
+}
+
+export { Empty };
