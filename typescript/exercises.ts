@@ -145,5 +145,3 @@ export class Empty<T> implements BinarySearchTree<T> {
       return "()";
   }
 }
-
-

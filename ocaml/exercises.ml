@@ -14,11 +14,8 @@ let change (amount : int) : int list =
     in
     aux amount denominations
 
-
-
 let non_empty (s : string) : bool =
   String.length s > 0
-
 
   let first_then_apply (lst : 'a list) (predicate : 'a -> bool) (f : 'a -> 'b option) : 'b option =
     match List.find_opt predicate lst with
@@ -26,7 +23,6 @@ let non_empty (s : string) : bool =
     | None -> None   
   
   let lower (s : string) : string option = Some (String.lowercase_ascii s)
-
 
 let rec int_pow (base : int) (exp : int) : int =
   if exp = 0 then 1
@@ -38,31 +34,23 @@ let rec powers_generator (b : int) : int Seq.t =
   in
   aux 0
 
-
-
+let valid_line (line : string) : bool =
+  let trimmed = String.trim line in
+  String.length trimmed > 0 && trimmed.[0] <> '#'
   
-  let valid_line (line : string) : bool =
-    let trimmed = String.trim line in
-    String.length trimmed > 0 && trimmed.[0] <> '#'
-  
-  let meaningful_line_count (filename : string) : int =
-    let in_channel = open_in filename in
-    Fun.protect
-      (fun () ->
-         let rec count acc =
-           try
-             let line = input_line in_channel in
-             if valid_line line then count (acc + 1) else count acc
-           with End_of_file -> acc
+let meaningful_line_count (filename : string) : int =
+  let in_channel = open_in filename in
+  Fun.protect
+    (fun () ->
+      let rec count acc =
+        try
+          let line = input_line in_channel in
+            if valid_line line then count (acc + 1) else count acc
+            with End_of_file -> acc
          in
-         count 0
+          count 0
       )
-      ~finally:(fun () -> close_in in_channel)
-  
-  
-
-  
-
+  ~finally:(fun () -> close_in in_channel)
 
 type shape =
   | Box of float * float * float
@@ -77,8 +65,6 @@ let surface_area (s : shape) : float =
   match s with
   | Box (w, h, d) -> 2.0 *. ((w *. h) +. (w *. d) +. (h *. d))
   | Sphere r -> 4.0 *. Float.pi *. r ** 2.0
-
-
 
 type 'a bst =
   | Empty
@@ -95,7 +81,6 @@ let rec insert (x : 'a) (tree : 'a bst) : 'a bst =
     else
       tree  
 
-(* Contains function*)
 let rec contains (x : 'a) (tree : 'a bst) : bool =
   match tree with
   | Empty -> false
@@ -104,13 +89,11 @@ let rec contains (x : 'a) (tree : 'a bst) : bool =
     else if x < v then contains x left
     else contains x right
 
-(* In-order traversal*)
 let rec inorder (tree : 'a bst) : 'a list =
   match tree with
   | Empty -> []
   | Node (v, left, right) -> (inorder left) @ [v] @ (inorder right)
 
-(* Calculate size of tree *)
 let rec size (tree : 'a bst) : int =
   match tree with
   | Empty -> 0
