@@ -1,4 +1,6 @@
-import { open } from "node:fs/promises"
+import { createReadStream } from "node:fs";
+import { open } from "node:fs/promises";
+import * as readline from "node:readline";
 
 export function change(amount: bigint): Map<bigint, bigint> {
   if (amount < 0) {
@@ -24,13 +26,28 @@ export function* powersGenerator(base: bigint): Generator<bigint> {
   }
 }
 
+export async function meaningfulLineCount(filePath: string): Promise<number> {
+    const fileStream = createReadStream(filePath);
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity,
+    });
 
-// Write your line count function here
+    let lineCount = 0;
+    for await (const line of rl) {
+        const trimmedLine = line.trim();
+        if (trimmedLine !== '' && !trimmedLine.startsWith('#')) {
+            lineCount++;
+        }
+    }
+    return lineCount;
+}
 
 interface Sphere {
   kind: "Sphere"
   radius: number
 }
+
 interface Box {
   kind: "Box"
   width: number
@@ -55,7 +72,6 @@ export function surfaceArea(shape: Shape): number {
 }
 
 export type Shape = Sphere | Box
-
 
 export interface BinarySearchTree<T> {
   size(): number;
@@ -110,7 +126,6 @@ class Node<T> implements BinarySearchTree<T> {
     return `(${leftStr}${this.nodeValue}${rightStr})`;
   }
 }
-
 export class Empty<T> implements BinarySearchTree<T> {
   size(): number {
       return 0;
