@@ -12,7 +12,11 @@ Welcome!
 
 **Homework 3**
 - Worked on by *Jaime and Ian*.
-- This assignment strongly focused on user-defined types in Typescript, Haskell, and OCaml. 
+- This assignment strongly focused on user-defined types in Typescript, Haskell, and OCaml.
+
+**Homework 4**
+- Worked on by *Jaime and Ian*.
+- This assignment focused on C, C++, and Rust. Memory management was a key skill that was practiced in this assignment.
 
 ## The Test Suites
 
