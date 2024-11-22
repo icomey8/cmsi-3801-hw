@@ -20,7 +20,6 @@ private:
     Stack(const Stack<T>&) = delete;
     Stack<T>& operator=(const Stack<T>&) = delete;
 
-    // Resize the stack to a new capacity
     void reallocate(int new_capacity) {
         if (new_capacity > MAX_CAPACITY) {
             throw std::overflow_error("Exceeded maximum stack capacity");

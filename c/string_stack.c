@@ -4,13 +4,11 @@
 
 #define INITIAL_CAPACITY 16 
 
-// Complete your string stack implementation in this file.
 struct _Stack {
     char** elements;
     int top;
     int capacity;
 };
-
 
 stack_response create() {
     stack s = malloc(sizeof(struct _Stack));
@@ -38,34 +36,16 @@ bool is_empty(const stack s) {
 }
 
 bool is_full(const stack s) {
-    return size(s) == s->capacity;
+    return size(s) == MAX_CAPACITY;
 }
 
 response_code push(stack s, char* item) {
     if (is_full(s)) {
-        int new_capacity = s->capacity * 2;
-        if (new_capacity > MAX_CAPACITY) {
-            new_capacity = MAX_CAPACITY;
-        }
-        char** new_elements = realloc(s->elements, new_capacity * sizeof(char*));
-        if (new_elements == NULL) {
-            return out_of_memory;
-        }
-        s->elements = new_elements;
-        s->capacity = new_capacity;
+        return stack_full;
     }
 
-    // Ensure the string is not too large
     if (strlen(item) > MAX_ELEMENT_BYTE_SIZE) {
         return stack_element_too_large;
-    }
-
-    s->elements[s->top++] = strdup(item);
-    return success;
-
-
-    if (is_full(s)) {
-        return stack_full;
     }
 
     if (s->top == s->capacity) {
@@ -79,35 +59,53 @@ response_code push(stack s, char* item) {
         }
         s->elements = new_elements;
         s->capacity = new_capacity;
-
-        if (sizeof(item) > MAX_ELEMENT_BYTE_SIZE) {
-            return stack_element_too_large;
-        }
-
-        s->elements[s->top++] = strdup(item);
-        return success;
     }
+
+    char* copy = strdup(item);
+    if (copy == NULL) {
+        return out_of_memory;
+    }
+    s->elements[s->top++] = copy;
+    return success;
 }
 
 string_response pop(stack s) {
     if (is_empty(s)) {
         return (string_response){.code = stack_empty, .string = NULL};
     }
-    char* popped = s->elements[--s->top];
 
-    int new_capacity = s->capacity / 2; // needs to shrink if under 1/4 full 
-    if (new_capacity < 1) {
-        new_capacity = 1;
-    }  
-    char** new_elements = realloc(s->elements, new_capacity * sizeof(char*));
-    if (new_elements == NULL) {
+    char* popped = s->elements[--s->top];
+    s->elements[s->top] = NULL;
+
+    if (s->top < s->capacity / 4 && s->capacity > INITIAL_CAPACITY) {
+        int new_capacity = s->capacity / 2;
+        if (new_capacity < INITIAL_CAPACITY) {
+            new_capacity = INITIAL_CAPACITY;
+        }
+        char** new_elements = realloc(s->elements, new_capacity * sizeof(char*));
+        if (new_elements != NULL) {
+            s->elements = new_elements;
+            s->capacity = new_capacity;
+        }
+    }
+
+    char* copy = strdup(popped);
+    free(popped);
+
+    if (copy == NULL) {
         return (string_response){.code = out_of_memory, .string = NULL};
     }
-    s->elements = new_elements;
-    s->capacity = new_capacity;
-
-    return (string_response){.code = success, .string = strdup(popped)}; // or just popped
+    return (string_response){.code = success, .string = copy};
 }
 
 void destroy(stack* s) {
+    if (s == NULL || *s == NULL) return;
+
+    for (int i = 0; i < (*s)->top; i++) {
+        free((*s)->elements[i]);
+    }
+
+    free((*s)->elements);
+    free(*s);
+    *s = NULL;
 }
