@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 	"math/rand"
-	"time"
 	"sync"
 	"sync/atomic"
+	"time"
 )
 
 // A little utility that simulates performing a task for a random duration.
@@ -23,37 +23,52 @@ type Order struct {
 	id uint64
 	customer string 
 	preparedBy string
-	// check java version to add more
-		// make a replay which is a channel that can take the order (need pointer to the order)
+	reply chan *Order
 }
 
 // generate next order id - similar to java, need atomic
 var nextId atomic.Uint64
 
 // a waiter can only hold 3 orders at once
-var Waiter = make(chan *Order, 3 )
+var Waiter = make(chan *Order, 3)
 
 
 func Cook(name string) {
-	// log that cooks starts
-	// loop forever
-	// wait for order from waiter, cook it
-	// put name of the cook in the order
-	// send it back into the reply channel order.replay <- order
+	log.Println(name, "cook starts")
+	for {
+		order := <- Waiter
+		do(10, name, "cooking order", order.id, "for", order.customer)
+		order.preparedBy = name
+		order.reply <- order
+	}
 
 }
 
 func Customer(name string, wg *sync.WaitGroup) {
-	for mealsEaten := 0, mealsEaten < 5; {
+	for mealsEaten := 0; mealsEaten < 5; {
 		// place order 
+		order := &Order{
+			id:       nextId.Add(1),
+			customer: name,
+			reply:    make(chan *Order),
+		}
+		log.Println(name, "places order", order.id)
+		
 		// select statement so that if waiter gets order within 7 secs 
 			// then you get it from  cook and eat it (mealsEaten ++)
 			// if don't get it, leave the restaurant (do(5, name, "is waiting too long, abandoning order", order.id))
+		select {
+		// case 1 - get order in time 
+		// case 2 - too long, abandon order
+		}
+
 	}
+	log.Println(name, "going home")
 }
 
 func main() {
 	customers := [10]string{"Ani", "Bai", "Cat", "Dao", "Eve", "Fay", "Gus", "Hua", "Iza", "Jai"}
+
 	// in a loop start each customer as a go routine
 	var wg sync.WaitGroup
 	for _, customer := range customers {
@@ -67,6 +82,7 @@ func main() {
 	go Cook("Colette")
 
 	// wait for all customers to finish 
+	wg.Wait()
 
 	log.Println("Restaurant closing")
 }
