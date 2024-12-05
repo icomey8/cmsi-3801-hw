@@ -45,43 +45,47 @@ func Cook(name string) {
 }
 
 func Customer(name string, wg *sync.WaitGroup) {
+	defer wg.Done()
+
 	for mealsEaten := 0; mealsEaten < 5; {
-		// place order 
 		order := &Order{
 			id:       nextId.Add(1),
 			customer: name,
 			reply:    make(chan *Order),
 		}
 		log.Println(name, "places order", order.id)
-		
-		// select statement so that if waiter gets order within 7 secs 
-			// then you get it from  cook and eat it (mealsEaten ++)
-			// if don't get it, leave the restaurant (do(5, name, "is waiting too long, abandoning order", order.id))
-		select {
-		// case 1 - get order in time 
-		// case 2 - too long, abandon order
-		}
 
+		select {
+		case Waiter <- order:
+			// Successfully placed the order
+			meal := <-order.reply
+			do(2, name, "eating cooked order", meal.id, "prepared by", meal.preparedBy)
+			mealsEaten++
+		case <-time.After(7 * time.Second):
+			// Timeout: abandon the order
+			do(5, name, "is waiting too long, abandoning order", order.id)
+		}
 	}
 	log.Println(name, "going home")
 }
+}
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
+
 	customers := [10]string{"Ani", "Bai", "Cat", "Dao", "Eve", "Fay", "Gus", "Hua", "Iza", "Jai"}
 
-	// in a loop start each customer as a go routine
 	var wg sync.WaitGroup
+
 	for _, customer := range customers {
 		wg.Add(1)
 		go Customer(customer, &wg)
 	}
 
-	// start 3 cooks, Remy, Linguini, and Colette
 	go Cook("Remy")
 	go Cook("Linguini")
 	go Cook("Colette")
 
-	// wait for all customers to finish 
 	wg.Wait()
 
 	log.Println("Restaurant closing")
