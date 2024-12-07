@@ -18,6 +18,10 @@ Welcome!
 - Worked on by *Jaime and Ian*.
 - This assignment focused on C, C++, and Rust. Memory management was a key skill that was practiced in this assignment.
 
+**Homework 5**
+- Worked on by *Jaime and Ian*.
+- This assignment focused on Go and the concept of concurrency.
+
 ## The Test Suites
 
 The test files are included in the repo already. They are available for YOU! They will help you not only learn the languages and concepts covered in this course, but to help you with professional practice. You should get accustomed to writing code to make tests pass. As you grow in your profession, you will get used to writing your tests early.
